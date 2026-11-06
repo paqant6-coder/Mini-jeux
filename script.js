@@ -40,7 +40,7 @@ bouton.addEventListener("click", function() {
   ];
 
   const hasard = Math.floor(Math.random() * messages.length);
-  zoneTexte.textContent = messages[hasard];
+  zoneTexte.textContent = messages.at(hasard);
 });
 
 // ==========================================
@@ -66,18 +66,18 @@ function dessinerCentre() {
   ctx.fill();
 }
 
-// Récupère la position exacte de la souris ou du doigt
+// Position universelle (fonctionne sur PC, tablette et téléphone)
 function obtenirPosition(e) {
   const rect = canvas.getBoundingClientRect();
-  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
   return {
-    x: clientX - rect.left,
-    y: clientY - rect.top
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
   };
 }
 
 function commencerDessin(e) {
+  e.preventDefault();
+  canvas.setPointerCapture(e.pointerId);
   enTrainDeDessiner = true;
   points = [];
   dessinerCentre();
@@ -88,8 +88,9 @@ function commencerDessin(e) {
 
 function tracer(e) {
   if (!enTrainDeDessiner) return;
+  e.preventDefault();
   const pos = obtenirPosition(e);
-  const dernierPoint = points[points.length - 1];
+  const dernierPoint = points.at(-1);
 
   ctx.strokeStyle = "#2c7a7b";
   ctx.lineWidth = 4;
@@ -102,9 +103,12 @@ function tracer(e) {
   points.push(pos);
 }
 
-function terminerDessin() {
+function terminerDessin(e) {
   if (!enTrainDeDessiner) return;
   enTrainDeDessiner = false;
+  if (canvas.hasPointerCapture(e.pointerId)) {
+    canvas.releasePointerCapture(e.pointerId);
+  }
   calculerScore();
 }
 
@@ -137,8 +141,8 @@ function calculerScore() {
   const ecartMoyen = sommeEcarts / rayons.length;
 
   // 3. Vérifier si le cercle est bien fermé (distance entre début et fin)
-  const debut = points[0];
-  const fin = points[points.length - 1];
+  const debut = points.at(0);
+  const fin = points.at(-1);
   const distanceFermeture = Math.hypot(fin.x - debut.x, fin.y - debut.y);
 
   // Calcul final sur 100 %
@@ -148,14 +152,11 @@ function calculerScore() {
   texteScore.textContent = `Précision : ${precision} % !`;
 }
 
-// Événements souris et tactile
-canvas.addEventListener("mousedown", commencerDessin);
-canvas.addEventListener("mousemove", tracer);
-window.addEventListener("mouseup", terminerDessin);
-
-canvas.addEventListener("touchstart", commencerDessin);
-canvas.addEventListener("touchmove", tracer);
-window.addEventListener("touchend", terminerDessin);
+// Événements unifiés PC + Mobile (Pointer Events)
+canvas.addEventListener("pointerdown", commencerDessin);
+canvas.addEventListener("pointermove", tracer);
+canvas.addEventListener("pointerup", terminerDessin);
+canvas.addEventListener("pointercancel", terminerDessin);
 
 btnEffacer.addEventListener("click", function() {
   dessinerCentre();
