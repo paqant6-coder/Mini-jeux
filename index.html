@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes Activités Interactives</title>
-  <!-- On relie le fichier CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,11 +23,13 @@
     <!-- ACTIVITÉ 2 -->
     <section class="carte">
       <h2>2. Le défi du cercle parfait</h2>
-      <p>Bientôt disponible...</p>
+      <p>Dessine un cercle autour du point bleu sans lever le doigt ou la souris !</p>
+      <canvas id="zone-cercle" width="320" height="320"></canvas>
+      <p id="resultat-cercle" class="resultat">Trace ton cercle pour voir ton score</p>
+      <button id="btn-effacer">Effacer / Recommencer</button>
     </section>
   </div>
 
-  <!-- On relie le fichier JavaScript à la toute fin -->
   <script src="script.js"></script>
 </body>
 </html>
