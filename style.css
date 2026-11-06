@@ -36,6 +36,7 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  margin-top: 5px;
 }
 
 button:hover {
@@ -47,4 +48,14 @@ button:hover {
   font-weight: bold;
   color: #2c7a7b;
   font-size: 18px;
+}
+
+canvas {
+  border: 2px dashed #cbd5e0;
+  border-radius: 12px;
+  background-color: #fafafa;
+  cursor: crosshair;
+  touch-action: none; /* Empêche l'écran de défiler quand on dessine sur mobile */
+  margin: 10px auto;
+  display: block;
 }
