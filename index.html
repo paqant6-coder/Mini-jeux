@@ -67,29 +67,46 @@
     <div class="carte">
       <h2>💬 Espace Commentaires</h2>
       <p>Connecte-toi avec GitHub pour laisser un commentaire public visible par tous !</p>
-      <script src="https://utteranc.es"
-              repo="paqant6-coder/Mini-jeux"
-              issue-term="pathname"
-              theme="github-light"
-              crossorigin="anonymous"
-              async>
-      </script>
+      <div id="zone-utterances">
+        <script src="https://utteranc.es"
+                repo="paqant6-coder/Mini-jeux"
+                issue-term="title"
+                label="commentaire"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+        </script>
+      </div>
     </div>
 
-    <!-- 7. BOÎTE À SUGGESTIONS (FORMSPREE) -->
+    <!-- 7. BOÎTE À SUGGESTIONS (SDK OFFICIEL FORMSPREE AJAX) -->
     <div class="carte">
       <h2>💡 Boîte à Suggestions</h2>
       <p>Une idée de nouveau mini-jeu ? Envoie-la moi directement !</p>
-      <form id="form-suggestion" action="https://formspree.io/f/mrpqelbl" method="POST" class="zone-formulaire">
-        <input type="text" name="pseudo" placeholder="Ton pseudo (optionnel)" maxlength="25">
-        <input type="text" name="idee_jeu" placeholder="Idée de jeu (ex: Snake, Quiz...)" required>
-        <textarea name="details" placeholder="Explique ton idée..." rows="3" required></textarea>
-        <button type="submit" id="btn-envoyer-sugg">Envoyer ma suggestion</button>
+      
+      <div data-fs-success>✅ Merci ! Ta suggestion a bien été envoyée.</div>
+      <div data-fs-error></div>
+
+      <form id="form-suggestion" class="zone-formulaire">
+        <input type="text" name="pseudo" placeholder="Ton pseudo (optionnel)" maxlength="25" data-fs-field>
+        <span data-fs-error="pseudo"></span>
+
+        <input type="text" name="idee_jeu" placeholder="Idée de jeu (ex: Snake, Quiz...)" required data-fs-field>
+        <span data-fs-error="idee_jeu"></span>
+
+        <textarea name="details" placeholder="Explique ton idée..." rows="3" required data-fs-field></textarea>
+        <span data-fs-error="details"></span>
+
+        <button type="submit" data-fs-submit-btn>Envoyer ma suggestion</button>
       </form>
-      <p id="confirmation-sugg" class="resultat"></p>
     </div>
   </div>
 
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#form-suggestion', formId: 'mrpqelbl' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
   <script src="script.js"></script>
 </body>
 </html>
