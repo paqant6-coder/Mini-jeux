@@ -100,71 +100,34 @@ $("btn-start-fn").onclick = () => {
   }, 1000);
 };
 
-// 6. ESPACE COMMENTAIRES & 7. SUGGESTIONS
-const creerItem = (titre, texte, date, estSuggestion = false) => {
-  const item = document.createElement("div");
-  item.className = "item-message" + (estSuggestion ? " item-suggestion" : "");
+// 6. BOÎTE À SUGGESTIONS (ENVOI FORMSPREE SANS QUITTER LA PAGE)
+const formSugg = $("form-suggestion");
+if (formSugg) {
+  formSugg.onsubmit = async e => {
+    e.preventDefault();
+    const btn = $("btn-envoyer-sugg");
+    const msg = $("confirmation-sugg");
+    btn.disabled = true;
+    btn.textContent = "Envoi en cours...";
 
-  const entete = document.createElement("div");
-  entete.className = "entete-message";
+    try {
+      const rep = await fetch(formSugg.action, {
+        method: "POST",
+        body: new FormData(formSugg),
+        headers: { "Accept": "application/json" }
+      });
 
-  const spanTitre = document.createElement("span");
-  spanTitre.textContent = titre;
-
-  const spanDate = document.createElement("span");
-  spanDate.className = "date-message";
-  spanDate.textContent = date;
-
-  const contenu = document.createElement("div");
-  contenu.className = "contenu-message";
-  contenu.textContent = texte;
-
-  entete.append(spanTitre, spanDate);
-  item.append(entete, contenu);
-  return item;
-};
-
-const chargerMessages = (cle, conteneurId, estSuggestion = false) => {
-  const liste = JSON.parse(localStorage.getItem(cle) || "[]");
-  const conteneur = $(conteneurId);
-  conteneur.innerHTML = "";
-  liste.forEach(msg => {
-    conteneur.appendChild(creerItem(msg.titre, msg.texte, msg.date, estSuggestion));
-  });
-};
-
-$("btn-publier-comm").onclick = () => {
-  const pseudo = $("comm-pseudo").value.trim() || "Joueur Anonyme";
-  const texte = $("comm-texte").value.trim();
-  if (!texte) return;
-
-  const date = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-  const liste = JSON.parse(localStorage.getItem("mes_commentaires") || "[]");
-  liste.unshift({ titre: pseudo, texte, date });
-  localStorage.setItem("mes_commentaires", JSON.stringify(liste));
-
-  $("comm-texte").value = "";
-  chargerMessages("mes_commentaires", "liste-commentaires", false);
-};
-
-$("btn-envoyer-sugg").onclick = () => {
-  const titre = $("sugg-titre").value.trim();
-  const texte = $("sugg-details").value.trim();
-  if (!titre || !texte) {
-    $("confirmation-sugg").textContent = "Remplis le titre et l'explication de ton idée !";
-    return;
-  }
-
-  const date = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" });
-  const liste = JSON.parse(localStorage.getItem("mes_suggestions") || "[]");
-  liste.unshift({ titre: "💡 " + titre, texte, date });
-  localStorage.setItem("mes_suggestions", JSON.stringify(liste));
-
-  $("sugg-titre").value = "";
-  $("sugg-details").value = "";
-  $("confirmation-sugg").textContent = "Merci ! Ta suggestion a bien été ajoutée.";
-  chargerMessages("mes_suggestions", "liste-suggestions", true);
-};
-
-chargerMessages("mes_commentaires", "liste-commentaires", false);
-chargerMessages("mes_suggestions", "liste-suggestions", true);
+      if (rep.ok) {
+        msg.textContent = "✅ Merci ! Ta suggestion a bien été envoyée.";
+        formSugg.reset();
+      } else {
+        msg.textContent = "❌ Oups ! Une erreur s'est produite lors de l'envoi.";
+      }
+    } catch {
+      msg.textContent = "❌ Impossible de se connecter au serveur.";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Envoyer ma suggestion";
+    }
+  };
+}
