@@ -120,7 +120,7 @@ canvas {
   transform: scale(0.8);
 }
 
-/* STYLES COMMENTAIRES & SUGGESTIONS */
+/* STYLES BOÎTE À SUGGESTIONS */
 .zone-formulaire {
   display: flex;
   flex-direction: column;
@@ -138,44 +138,6 @@ textarea {
   resize: vertical;
 }
 
-.liste-messages {
-  text-align: left;
-  max-height: 250px;
-  overflow-y: auto;
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.item-message {
-  background-color: #f7fafc;
-  border-left: 4px solid #4a90e2;
-  padding: 10px 14px;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.item-suggestion {
-  border-left-color: #38a169;
-}
-
-.entete-message {
-  font-weight: bold;
-  color: #2d3748;
-  margin-bottom: 4px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.date-message {
-  font-weight: normal;
-  font-size: 12px;
-  color: #718096;
-}
-
-.contenu-message {
-  color: #4a5568;
-  white-space: pre-wrap;
-  word-break: break-word;
+.utterances {
+  max-width: 100%;
 }
