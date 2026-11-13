@@ -63,29 +63,30 @@
       <button id="btn-start-fn">Lancer la partie</button>
     </div>
 
-    <!-- 6. ESPACE COMMENTAIRES -->
+    <!-- 6. ESPACE COMMENTAIRES PUBLICS (UTTERANCES) -->
     <div class="carte">
       <h2>💬 Espace Commentaires</h2>
-      <p>Laisse ton avis sur tes mini-jeux préférés !</p>
-      <div class="zone-formulaire">
-        <input type="text" id="comm-pseudo" placeholder="Ton pseudo..." maxlength="20">
-        <textarea id="comm-texte" placeholder="Écris ton commentaire ici..." rows="3"></textarea>
-        <button id="btn-publier-comm">Publier le commentaire</button>
-      </div>
-      <div id="liste-commentaires" class="liste-messages"></div>
+      <p>Connecte-toi avec GitHub pour laisser un commentaire public visible par tous !</p>
+      <script src="https://utteranc.es"
+              repo="paqant6-coder/Mini-jeux"
+              issue-term="pathname"
+              theme="github-light"
+              crossorigin="anonymous"
+              async>
+      </script>
     </div>
 
-    <!-- 7. BOÎTE À SUGGESTIONS -->
+    <!-- 7. BOÎTE À SUGGESTIONS (FORMSPREE) -->
     <div class="carte">
       <h2>💡 Boîte à Suggestions</h2>
-      <p>Une idée de nouveau mini-jeu ou d'amélioration ?</p>
-      <div class="zone-formulaire">
-        <input type="text" id="sugg-titre" placeholder="Idée de jeu (ex: Snake, Quiz...)">
-        <textarea id="sugg-details" placeholder="Explique ton idée..." rows="3"></textarea>
-        <button id="btn-envoyer-sugg">Envoyer ma suggestion</button>
-      </div>
+      <p>Une idée de nouveau mini-jeu ? Envoie-la moi directement !</p>
+      <form id="form-suggestion" action="https://formspree.io/f/mrpqelbl" method="POST" class="zone-formulaire">
+        <input type="text" name="pseudo" placeholder="Ton pseudo (optionnel)" maxlength="25">
+        <input type="text" name="idee_jeu" placeholder="Idée de jeu (ex: Snake, Quiz...)" required>
+        <textarea name="details" placeholder="Explique ton idée..." rows="3" required></textarea>
+        <button type="submit" id="btn-envoyer-sugg">Envoyer ma suggestion</button>
+      </form>
       <p id="confirmation-sugg" class="resultat"></p>
-      <div id="liste-suggestions" class="liste-messages"></div>
     </div>
   </div>
 
