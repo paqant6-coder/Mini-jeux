@@ -7,62 +7,86 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <div class="conteneur">
     <h1>🎮 Mes Activités & Mini-Jeux</h1>
 
-    <!-- ACTIVITÉ 1 : MESSAGES GENTILS -->
-    <section class="carte">
+    <!-- 1. GÉNÉRATEUR DE MESSAGES GENTILS -->
+    <div class="carte">
       <h2>1. Générateur de messages gentils</h2>
       <p>Écris un prénom pour recevoir une belle pensée :</p>
-      <input type="text" id="champ-nom" placeholder="Ex: Alex">
-      <button id="btn-generer" type="button">Générer un message</button>
+      <input type="text" id="champ-nom" placeholder="Entre un prénom...">
+      <button id="btn-generer">Générer un message</button>
       <p id="resultat-message" class="resultat"></p>
-    </section>
+    </div>
 
-    <!-- ACTIVITÉ 2 : CERCLE PARFAIT -->
-    <section class="carte">
+    <!-- 2. LE DÉFI DU CERCLE PARFAIT -->
+    <div class="carte">
       <h2>2. Le défi du cercle parfait</h2>
       <p>Dessine un cercle autour du point bleu sans relâcher !</p>
       <canvas id="zone-cercle" width="300" height="300"></canvas>
       <p id="resultat-cercle" class="resultat">Trace ton cercle pour voir ton score</p>
-      <button id="btn-effacer" type="button">Effacer / Recommencer</button>
-    </section>
+      <button id="btn-effacer">Effacer / Recommencer</button>
+    </div>
 
-    <!-- ACTIVITÉ 3 : MINI-MINECRAFT -->
-    <section class="carte">
-      <h2>3. Mini-Minecraft 2D ⛏️</h2>
+    <!-- 3. MINI-MINECRAFT 2D -->
+    <div class="carte">
+      <h2>3. Mini-Minecraft 2D ⛏</h2>
       <p>Choisis un bloc ou la pioche et clique sur la grille :</p>
       <div class="barre-outils">
-        <button class="outil actif" type="button" data-bloc="herbe">🟩 Herbe</button>
-        <button class="outil" type="button" data-bloc="terre">🟫 Terre</button>
-        <button class="outil" type="button" data-bloc="pierre">⬜ Pierre</button>
-        <button class="outil" type="button" data-bloc="bois">🟧 Bois</button>
-        <button class="outil" type="button" data-bloc="vide">⛏️ Miner</button>
+        <button class="outil actif" data-bloc="herbe">🟩 Herbe</button>
+        <button class="outil" data-bloc="terre">🟫 Terre</button>
+        <button class="outil" data-bloc="pierre">⬜ Pierre</button>
+        <button class="outil" data-bloc="bois">🟧 Bois</button>
+        <button class="outil" data-bloc="vide">⛏ Miner</button>
       </div>
       <div id="grille-minecraft" class="grille-mc"></div>
-      <button id="btn-reset-mc" type="button">Réinitialiser le monde</button>
-    </section>
+      <button id="btn-reset-mc">Réinitialiser le monde</button>
+    </div>
 
-    <!-- ACTIVITÉ 4 : MINI-ROBLOX OBBY -->
-    <section class="carte">
+    <!-- 4. MINI-ROBLOX : PARCOURS OBBY -->
+    <div class="carte">
       <h2>4. Mini-Roblox : Parcours Obby 🧱</h2>
       <p>Appuie sur <strong>Espace</strong> ou clique sur le jeu pour sauter par-dessus la lave !</p>
       <canvas id="jeu-roblox" width="460" height="180"></canvas>
       <p id="score-roblox" class="resultat">Score : 0 | Record : 0</p>
-      <button id="btn-start-roblox" type="button">Jouer / Rejouer</button>
-    </section>
+      <button id="btn-start-roblox">Jouer / Rejouer</button>
+    </div>
 
-    <!-- ACTIVITÉ 5 : MINI-FORTNITE -->
-    <section class="carte">
+    <!-- 5. MINI-FORTNITE : CHASSE AUX LAMAS -->
+    <div class="carte">
       <h2>5. Mini-Fortnite : Chasse aux Lamas 🦙</h2>
       <p>Clique sur un maximum de cibles en 15 secondes pour faire Top 1 !</p>
       <div id="arene-fortnite" class="arene-fn">
         <div id="cible-fn" class="cible-fn">🦙</div>
       </div>
       <p id="score-fortnite" class="resultat">Éliminations : 0 | Temps : 15s</p>
-      <button id="btn-start-fn" type="button">Lancer la partie</button>
-    </section>
+      <button id="btn-start-fn">Lancer la partie</button>
+    </div>
+
+    <!-- 6. ESPACE COMMENTAIRES -->
+    <div class="carte">
+      <h2>💬 Espace Commentaires</h2>
+      <p>Laisse ton avis sur tes mini-jeux préférés !</p>
+      <div class="zone-formulaire">
+        <input type="text" id="comm-pseudo" placeholder="Ton pseudo..." maxlength="20">
+        <textarea id="comm-texte" placeholder="Écris ton commentaire ici..." rows="3"></textarea>
+        <button id="btn-publier-comm">Publier le commentaire</button>
+      </div>
+      <div id="liste-commentaires" class="liste-messages"></div>
+    </div>
+
+    <!-- 7. BOÎTE À SUGGESTIONS -->
+    <div class="carte">
+      <h2>💡 Boîte à Suggestions</h2>
+      <p>Une idée de nouveau mini-jeu ou d'amélioration ?</p>
+      <div class="zone-formulaire">
+        <input type="text" id="sugg-titre" placeholder="Idée de jeu (ex: Snake, Quiz...)">
+        <textarea id="sugg-details" placeholder="Explique ton idée..." rows="3"></textarea>
+        <button id="btn-envoyer-sugg">Envoyer ma suggestion</button>
+      </div>
+      <p id="confirmation-sugg" class="resultat"></p>
+      <div id="liste-suggestions" class="liste-messages"></div>
+    </div>
   </div>
 
   <script src="script.js"></script>
