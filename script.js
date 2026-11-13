@@ -99,35 +99,3 @@ $("btn-start-fn").onclick = () => {
     else $("score-fortnite").textContent = `Éliminations : ${fSc} | Temps : ${fT}s`;
   }, 1000);
 };
-
-// 6. BOÎTE À SUGGESTIONS (ENVOI FORMSPREE SANS QUITTER LA PAGE)
-const formSugg = $("form-suggestion");
-if (formSugg) {
-  formSugg.onsubmit = async e => {
-    e.preventDefault();
-    const btn = $("btn-envoyer-sugg");
-    const msg = $("confirmation-sugg");
-    btn.disabled = true;
-    btn.textContent = "Envoi en cours...";
-
-    try {
-      const rep = await fetch(formSugg.action, {
-        method: "POST",
-        body: new FormData(formSugg),
-        headers: { "Accept": "application/json" }
-      });
-
-      if (rep.ok) {
-        msg.textContent = "✅ Merci ! Ta suggestion a bien été envoyée.";
-        formSugg.reset();
-      } else {
-        msg.textContent = "❌ Oups ! Une erreur s'est produite lors de l'envoi.";
-      }
-    } catch {
-      msg.textContent = "❌ Impossible de se connecter au serveur.";
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "Envoyer ma suggestion";
-    }
-  };
-}
