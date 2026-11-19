@@ -99,3 +99,51 @@ $("btn-start-fn").onclick = () => {
     else $("score-fortnite").textContent = `Éliminations : ${fSc} | Temps : ${fT}s`;
   }, 1000);
 };
+
+// 6. ESPACE COMMENTAIRES EN DIRECT (FIREBASE)
+// Remplace l'URL ci-dessous par le lien de ta base Firebase Realtime Database + /commentaires.json
+const URL_FIREBASE = "https://firebaseio.com";
+
+const chargerCommentaires = async () => {
+  try {
+    const res = await fetch(URL_FIREBASE);
+    const data = await res.json();
+    const liste = $("liste-commentaires");
+    liste.innerHTML = "";
+
+    if (!data) {
+      liste.innerHTML = "<p style='text-align:center;color:#718096;'>Aucun message pour l'instant. Sois le premier !</p>";
+      return;
+    }
+
+    Object.values(data).reverse().forEach(com => {
+      const div = document.createElement("div");
+      div.className = "item-commentaire";
+      const auteur = document.createElement("strong");
+      auteur.textContent = com.pseudo;
+      const msg = document.createElement("p");
+      msg.textContent = com.texte;
+      div.append(auteur, msg);
+      liste.appendChild(div);
+    });
+  } catch (e) {
+    $("liste-commentaires").innerHTML = "<p style='text-align:center;color:#e53e3e;'>Configure ton lien Firebase dans script.js pour activer les messages !</p>";
+  }
+};
+
+$("btn-publier-com").onclick = async () => {
+  const pseudo = $("com-pseudo").value.trim() || "Joueur anonyme";
+  const texte = $("com-texte").value.trim();
+  if (!texte) return alert("Écris d'abord un message !");
+
+  $("btn-publier-com").disabled = true;
+  await fetch(URL_FIREBASE, {
+    method: "POST",
+    body: JSON.stringify({ pseudo, texte, date: Date.now() })
+  });
+  $("com-texte").value = "";
+  $("btn-publier-com").disabled = false;
+  chargerCommentaires();
+};
+
+chargerCommentaires();
